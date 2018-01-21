@@ -1,0 +1,16 @@
+[submodule "meta-openembedded"]
+	path = meta-openembedded
+	url = git://git.openembedded.org/meta-openembedded
+	branch = rocko
+[submodule "meta-security"]
+	path = meta-security
+	url = git://git.yoctoproject.org/meta-security
+	branch = rocko
+[submodule "meta-raspberrypi"]
+	path = meta-raspberrypi
+	url = git://git.yoctoproject.org/meta-raspberrypi
+	branch = rocko
+[submodule "meta-rpi"]
+	path = meta-rpi
+	url = git://github.com/jumpnow/meta-rpi
+	branch = rocko
