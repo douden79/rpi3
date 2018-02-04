@@ -14,3 +14,7 @@
 	path = meta-qt5
 	url = https://github.com/meta-qt5/meta-qt5
 	branch = rocko
+[submodule "meta-rpi"]
+	path = meta-rpi
+	url = git://github.com/jumpnow/meta-rpi
+	branch = rocko
