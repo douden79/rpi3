@@ -18,3 +18,6 @@
 	path = meta-rpi
 	url = git://github.com/jumpnow/meta-rpi
 	branch = rocko
+[submodule "openembedded-core"]
+	path = openembedded-core
+	url = https://github.com/openembedded/openembedded-core
