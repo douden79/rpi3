@@ -25,6 +25,19 @@ BBLAYERS ?= \
 	$(CURDIR)/meta-raspberrypi \
 	$(CURDIR)/meta-rpi
 
+CONFFILES = \
+	$(TOPDIR)/env.source \
+	$(TOPDIR)/conf/openpli.conf \
+	$(TOPDIR)/conf/bblayers.conf \
+	$(TOPDIR)/conf/local.conf \
+	$(TOPDIR)/conf/site.conf
+
+CONFDEPS = \
+	$(DEPDIR)/.env.source.$(BITBAKE_ENV_HASH) \
+	$(DEPDIR)/.openpli.conf.$(OPENPLI_CONF_HASH) \
+	$(DEPDIR)/.bblayers.conf.$(BBLAYERS_CONF_HASH) \
+	$(DEPDIR)/.local.conf.$(LOCAL_CONF_HASH)
+
 GIT ?= git
 GIT_REMOTE := $(shell $(GIT) remote)
 GIT_USER_NAME := $(shell $(GIT) config user.name)
@@ -33,6 +46,8 @@ GIT_USER_EMAIL := $(shell $(GIT) symbolic-ref -q --short HEAD)
 hash = $(shell echo $(1) | $(XSUM) | awk '{print $$1}')
 
 .DEFAULT_GOAL = all
+
+
 
 ### Build init all.
 
@@ -54,13 +69,24 @@ $(BBLAYER):
 
 initialize: init
 
+init: env       #$(BBLAYER) env #$(CONFFILES)
+
 image: init
 	@echo 'Building image for $(MACHINE)'
-	@. $(TOPDIR)/env.source && cd $(TOPDIR) && bitbake console-image
+#	@. $(TOPDIR)/env.source && cd $(TOPDIR) && bitbake console-image
+	@. $(CURDIR)/scripts/oe-setup-builddir build
 
 feed: init
 	@echo 'Building feed for $(MACHINE)'
 	@. $(TOPDIR)/env.source && cd $(TOPDIR) && bitbake console-image
+
+env:
+	@mkdir -p $(BUILD_DIR)
+	@touch $(BUILD_DIR)/env.source
+	@echo "export BB_ENV_EXTRAWHITE=\"MACHINE\"" > $(BUILD_DIR)/env.source
+	@echo "export MACHINE" >> $(BUILD_DIR)/env.source
+	@echo "export PATH=$(CURDIR)/meta-rpi/scripts:$(CURDIR)/bitbake/bin:"$\{PATH\}"" >> $(BUILD_DIR)/env.source
+#	@echo "export PATH=$\{PATH}:/usr/bin/python3" >> $(BUILD_DIR)/env.source
 
 update:
 	@echo 'Updating Git repositories...'
