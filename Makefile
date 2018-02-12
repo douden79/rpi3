@@ -95,7 +95,7 @@ update:
 	else \
 		$(GIT) submodule sync && \
 		$(GIT) submodule update --init && \
-		echo "The openpli OE is now up-to-date."; \
+		echo "The raspberrypi is now up-to-date."; \
 	fi
 
 
