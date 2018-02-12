@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 #
-# Raspberry pi3 makefile by babel.
+# Raspberrypi3 makefile by babel.
 #
 #
 
@@ -22,19 +22,6 @@ DEPDIR = $(TOPDIR)/.deps
 # ========================================================================================================
 # layer define
 # ========================================================================================================
-BBLAYERS ?= \
-	$(CURDIR)/meta \
-	$(CURDIR)/meta-poky \
-	$(CURDIR)/meta-openembedded/meta-oe \
-	$(CURDIR)/meta-openembedded/meta-multimedia \
-	$(CURDIR)/meta-openembedded/meta-networking \
-	$(CURDIR)/meta-openembedded/meta-perl \
-	$(CURDIR)/meta-openembedded/meta-python \
-	$(CURDIR)/meta-qt5 \
-	$(CURDIR)/meta-raspberrypi \
-	$(CURDIR)/meta-security \
-	$(CURDIR)/meta-rpi
-
 CONFFILES = \
 	$(TOPDIR)/conf/bblayers.conf \
 	$(TOPDIR)/conf/local.conf \
@@ -63,7 +50,7 @@ hash = $(shell echo $(1) | $(XSUM) | awk '{print $$1}')
 .DEFAULT_GOAL := all
 all: init
 	@echo
-	@echo "Openembedded for the OpenPLi $(GIT_BRANCH) environment has been initialized"
+	@echo "Openembedded for the Raspberrypi3 $(GIT_BRANCH) environment has been initialized"
 	@echo "properly. Now you can start building your image, by doing either:"
 	@echo
 	@echo " MACHINE=... make image"
@@ -185,6 +172,19 @@ $(TOPDIR)/conf/bblayers.conf: $(DEPDIR)/.bblayers.conf.$(BBLAYERS_CONF_HASH)
 	@echo 'BBPATH = "${CURDIR}/meta"' >> $@
 #	@echo 'BBPATH = "${TOPDIR}"' >> $@
 	@echo 'BBFILES ?= ""' >> $@
+	@echo 'BBLAYERS ?= " \' >> $@
+	@echo '$(CURDIR)/meta \' >> $@
+	@echo '$(CURDIR)/meta-poky \' >> $@
+	@echo '$(CURDIR)/meta-yocto-bsp \' >> $@
+	@echo '$(CURDIR)/meta-openembedded/meta-oe \' >> $@
+	@echo '$(CURDIR)/meta-openembedded/meta-multimedia \' >> $@
+	@echo '$(CURDIR)/meta-openembedded/meta-networking \' >> $@
+	@echo '$(CURDIR)/meta-openembedded/meta-perl \' >> $@
+	@echo '$(CURDIR)/meta-openembedded/meta-python \' >> $@
+	@echo '$(CURDIR)/meta-qt5 \' >> $@
+	@echo '$(CURDIR)/meta-raspberrypi \' >> $@
+	@echo '$(CURDIR)/meta-security \' >> $@
+	@echo '$(CURDIR)/meta-rpi"' >> $@
 
 SANITY_CONF_HASH := $(call hash, \
 	'SANITY_CONF_VERSION = "0"' \
