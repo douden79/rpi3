@@ -79,6 +79,20 @@ image: init
 	@echo 'Building image for $(MACHINE)'
 	@. $(TOPDIR)/env.source && cd $(TOPDIR) && bitbake console-image
 
+console-image: init
+	@echo 'Building image for $(MACHINE)'
+	@. $(TOPDIR)/env.source && cd $(TOPDIR) && bitbake console-image
+
+qt5-image:
+	@echo 'Building image for $(MACHINE)'
+	@. $(TOPDIR)/env.source && cd $(TOPDIR) && bitbake qt5-image
+
+qt5-basic-image:
+	@echo 'Building image for $(MACHINE)'
+	@. $(TOPDIR)/env.source && cd $(TOPDIR) && bitbake qt5-basic-image
+
+
+
 feed: init
 	@echo 'Building feed for $(MACHINE)'
 	@. $(TOPDIR)/env.source && cd $(TOPDIR) && bitbake console-image-feed
